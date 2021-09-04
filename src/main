@@ -1,0 +1,26 @@
+// use brasilapi_client::cep::{CepOperations, EnumCepRequestVersion};
+// use brasilapi_client::holidays::HolidaysOperations;
+// use brasilapi_client::client::{self, BrasilApiClient};
+
+// fn main() {
+//     let cli = BrasilApiClient::new("https://brasilapi.com.br/api".to_string());
+//     //cep(cli);
+//     holidays(cli);
+// }
+
+// fn holidays(cli : BrasilApiClient){
+//     let resp = cli.get_holidays(&1900);
+//     if resp.is_err() {
+//         println!("{}",resp.unwrap_err());
+//         return;
+//     }
+// }
+
+// fn cep(cli : BrasilApiClient){
+//     let resp = cli.get_cep("03178-X01", Some(EnumCepRequestVersion::V2));
+//     if resp.is_err() {
+//         println!("{}",resp.unwrap_err());
+//         return;
+//     }
+//     println!("{}",resp.unwrap().street);
+// }
