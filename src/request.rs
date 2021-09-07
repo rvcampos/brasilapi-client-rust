@@ -1,9 +1,8 @@
 
 use crate::errors::Error;
-use log::{error, trace, warn};
+use log::{Level, debug, error, log_enabled, trace, warn};
 use serde::{de::DeserializeOwned, Serialize};
 use serde_json::{from_str};
-
 
 pub(crate) async fn get<Input: Serialize + std::fmt::Debug, Output: 'static + DeserializeOwned>(
     url: &str
@@ -36,6 +35,10 @@ fn parse_response<Output: DeserializeOwned>(
         match from_str::<Output>(&body) {
             Ok(output) => {
                 trace!("Request succeed");
+                if log_enabled!(Level::Debug) {
+                    debug!("Response: {}", &body);
+                }
+
                 return Ok(output);
             }
             Err(e) => {
