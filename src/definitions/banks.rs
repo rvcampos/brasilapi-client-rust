@@ -40,7 +40,7 @@ impl BrasilApiClient {
                     name: "code".to_string(),
                     min: 1, 
                     max: 999
-                })?
+                })
         }
 
         

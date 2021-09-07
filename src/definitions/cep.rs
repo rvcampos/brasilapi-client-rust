@@ -98,7 +98,7 @@ impl BrasilApiClient {
                     name: "cep".to_string(),
                     min: 8, 
                     max: 8
-                })?
+                })
         }
         
         Ok(get::<(), CepResponseData>(

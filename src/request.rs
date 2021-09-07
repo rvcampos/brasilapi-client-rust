@@ -31,7 +31,7 @@ fn parse_response<Output: DeserializeOwned>(
     status_code: u16,
     body: String,
 ) -> Result<Output, Error> {
-    if status_code >= 200 && status_code <= 204 {
+    if (200..=204).contains(&status_code) {
         match from_str::<Output>(&body) {
             Ok(output) => {
                 trace!("Request succeed");

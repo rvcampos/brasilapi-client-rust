@@ -50,16 +50,13 @@ pub enum Error {
 
 impl std::fmt::Display for CepDetailedError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            CepDetailedError { name, message, service } 
-            => write!(
-                f,
-                "Name: {}
-                Message: {}
-                Service:{}",
-                name, message, service
-            )
-        }
+        write!(
+            f,
+            "Name: {}
+            Message: {}
+            Service:{}",
+            self.name, self.message, self.service
+        )
     }
 }
 
@@ -147,12 +144,12 @@ impl From<&serde_json::Value> for Error {
 
         let errors = Vec::<CepDetailedError>::deserialize(&json["errors"]).unwrap();
 
-        return Error::BrasilCepApiError {
+        Error::BrasilCepApiError {
             message,
             name,
             r#type: ztype,
             errors
-        };
+        }
     }
 }
 

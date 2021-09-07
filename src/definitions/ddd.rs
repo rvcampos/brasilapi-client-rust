@@ -24,9 +24,9 @@ impl BrasilApiClient{
             return Err(Error::InvalidInputRangeError
                 {
                     name: "ddd".to_string(),
-                    min: MIN_DDD.clone() as i32, 
-                    max: MAX_DDD.clone() as i32
-                })?
+                    min: *MIN_DDD as i32, 
+                    max: *MAX_DDD as i32
+                })
         }
 
         Ok(get::<(), DDDResponseData>(

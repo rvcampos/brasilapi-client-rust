@@ -28,9 +28,9 @@ impl BrasilApiClient {
             return Err(Error::InvalidInputRangeError
                 {
                     name: "year".to_string(),
-                    min: MIN_YEAR.clone(), 
-                    max: MAX_YEAR.clone()
-                })?
+                    min: *MIN_YEAR, 
+                    max: *MAX_YEAR
+                })
         }
 
         
