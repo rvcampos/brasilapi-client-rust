@@ -49,7 +49,14 @@ fn parse_response<Output: DeserializeOwned>(
     }
     warn!("Expected success response code, got {}", status_code);
     match from_str(&body) {
-        Ok(e) => Err(Error::from(&e)),
+        Ok(e) => {
+            trace!("Request failed");
+            if log_enabled!(Level::Debug) {
+                debug!("Response: {}", &body);
+            }
+
+            Err(Error::from(&e))
+        },
         Err(e) => Err(Error::SerdeJsonError(e)),
     }
 }

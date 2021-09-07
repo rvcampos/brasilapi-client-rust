@@ -1,4 +1,4 @@
-use crate::{Rc, client::*, constants::ddd::*, errors::*, request::*};
+use crate::{client::*, constants::ddd::*, errors::*, request::*};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -71,7 +71,7 @@ mod tests {
 
     #[async_test]
     async fn test_non_existing() {
-        let resp = cli().get_city_and_states_by_ddd(&5).await;
+        let resp = cli().get_city_and_states_by_ddd(&26).await;
         assert!(resp.is_err());
     }
 

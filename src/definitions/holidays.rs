@@ -1,4 +1,4 @@
-use crate::{Rc, client::*, constants::holidays::{SVC_URL,MIN_YEAR, MAX_YEAR}, errors::*, request::*};
+use crate::{client::*, constants::holidays::{SVC_URL,MIN_YEAR, MAX_YEAR}, errors::*, request::*};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]

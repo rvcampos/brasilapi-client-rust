@@ -1,4 +1,4 @@
-use crate::{Rc, client::*, constants::cep::{SVC_V1_URL, SVC_V2_URL}, errors::*, request::*};
+use crate::{client::*, constants::cep::{SVC_V1_URL, SVC_V2_URL}, errors::*, request::*};
 use serde::{Deserialize, Serialize};
 
 /**

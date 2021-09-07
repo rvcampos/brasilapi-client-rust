@@ -90,10 +90,12 @@ impl std::fmt::Display for Error {
                 "Error during BrasilApiCall [CEP] [
                     message: {}
                     name: {}
-                    type: {}]",
+                    type: {}
+                    errors: {:#?}]",
                 message,
                 name,
                 r#type,
+                errors
             ),
             Error::HttpError(e) => write!(fmt, "HTTP request failed: {}", e),
             Error::NotExpectedRequestError => write!(fmt, "Not Expected Error"),
