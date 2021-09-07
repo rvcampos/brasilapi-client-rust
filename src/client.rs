@@ -7,13 +7,6 @@ pub struct BrasilApiClient {
     pub(crate) base_url: Rc<String>,
 }
 
-#[cfg(test)]
-pub(crate) mod tests {
-    use crate::client::BrasilApiClient;
-
-    pub(crate) fn cli() -> BrasilApiClient {BrasilApiClient::new_default()}
-}
-
 impl BrasilApiClient {
     pub fn new(base_url: impl Into<String>) -> BrasilApiClient {
         BrasilApiClient {
@@ -25,4 +18,11 @@ impl BrasilApiClient {
     pub fn new_default() -> BrasilApiClient {
         BrasilApiClient::new(crate::constants::DEFAULT_BASE_URL.to_string())
     }
+}
+
+#[cfg(test)]
+pub(crate) mod tests {
+    use crate::client::BrasilApiClient;
+
+    pub(crate) fn cli() -> BrasilApiClient {BrasilApiClient::new_default()}
 }

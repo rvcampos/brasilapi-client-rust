@@ -9,20 +9,6 @@
 //! Yes, probably, event reading some of the official documentation, I checked some cargo SDKs and wrappers, because I plan to use it soon 
 //! Sorry, I cheated :(
 //!
-//! ```toml
-//! [dependencies]
-//! brasilapi-client = "0.1.0"
-//! ```
-//!
-//! fn main() { block_on(async move {
-//!     // As this API is public, you can use the following default builder
-//!     let cli = BrasilApiClient::new_default(); // This method will use the default URL
-//!
-//!     // Get the index called "books"
-//!     let zipcode_answer = client.get_cep("01402-000").unwrap();
-//!
-//!     println!("Street: {}", zipcode_answer.street);
-//! })}
 #![doc = include_str!("../README.md")]
 #[macro_use] 
 extern crate lazy_static;
