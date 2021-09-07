@@ -1,4 +1,5 @@
 # Brasil API - Rust client wrapper
+[![Rust](https://github.com/rvcampos/brasilapi-client-rust/actions/workflows/rust.yml/badge.svg)](https://github.com/rvcampos/brasilapi-client-rust/actions/workflows/rust.yml)
 
 Rust client implementation for [Brasil API](https://brasilapi.com.br/docs)
 
