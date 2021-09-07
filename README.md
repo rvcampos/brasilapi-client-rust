@@ -1,3 +1,5 @@
+# Brasil API - Rust client wrapper
+
 Rust client implementation for [Brasil API](https://brasilapi.com.br/docs)
 
 [BrasilAPI GitHub Project](https://github.com/BrasilAPI/BrasilAPI)
@@ -40,7 +42,7 @@ Street: Avenida Brigadeiro Luiz Antonio
 ## APIs
 
 ### Banks
-TODO
+Implemented
 
 ### CEP (zipcode)
 
@@ -51,7 +53,7 @@ TODO
 TODO
 
 ### DDD
-TODO
+Implemented
 
 ### National Holidays - (Brasil) 
 Partial Implemented -> Dates are being treated as STRINGS
