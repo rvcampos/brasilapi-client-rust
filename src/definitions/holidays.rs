@@ -64,7 +64,7 @@ mod tests {
     #[async_test]
     async fn test_valid_at_1900() {
         let year = MIN_YEAR;
-        let resp = cli().get_holidays(&year).await;
+        let resp = cli().get_holidays(year).await;
         assert!(resp.is_ok());
         
         let expected_resp = r#"[{"date":"1900-01-01","name":"Confraternização mundial","type":"national"},{"date":"1900-02-27","name":"Carnaval","type":"national"},{"date":"1900-04-15","name":"Páscoa","type":"national"},{"date":"1900-04-21","name":"Tiradentes","type":"national"},{"date":"1900-05-01","name":"Dia do trabalho","type":"national"},{"date":"1900-06-14","name":"Corpus Christi","type":"national"},{"date":"1900-09-07","name":"Independência do Brasil","type":"national"},{"date":"1900-10-12","name":"Nossa Senhora Aparecida","type":"national"},{"date":"1900-11-02","name":"Finados","type":"national"},{"date":"1900-11-15","name":"Proclamação da República","type":"national"},{"date":"1900-12-25","name":"Natal","type":"national"}]"#;
@@ -72,7 +72,7 @@ mod tests {
         let received = resp.unwrap();
         assert_eq!(expected.len(), received.len());
 
-        let difference: Vec<_> = received.into_iter().filter(|item| !expected.contains(item)).collect();
-        assert_eq!(difference.len(), 0);
+        let difference:bool = received.iter().any(|item| !expected.contains(item));
+        assert!(!difference);
     }
 }
