@@ -1,7 +1,9 @@
-use crate::client;
-use serde::{Serialize, Deserialize};
+use crate::{Rc, client::*, constants::cep::{SVC_V1_URL, SVC_V2_URL}, errors::*, request::*};
+use serde::{Deserialize, Serialize};
 
-/// The Desired CEP Search Version
+/**
+The Desired CEP Search Version
+*/
 pub enum EnumCepRequestVersion {
     /// V1 for common data, without GeoLocalization
     V1,
@@ -78,62 +80,59 @@ impl PartialEq for CepResponseData {
     }
 }
 
-/// Trait for Zipcode Operations
-pub trait CepOperations {
-    /// Retrieve the desired CEP
-    fn get_cep(&self, cep: &str, cep_version: Option<EnumCepRequestVersion>) -> crate::BrResult<CepResponseData>;
-
-    // #[cfg(feature = "async")]
-    // fn get_cep_v1(&self, cep: &str) -> BrResult<CepV1>;
-}
-
-const URL_V1: &str = "cep/v1";
-const URL_V2: &str = "cep/v2";
-
-impl CepOperations for client::BrasilApiClient {
-    fn get_cep(&self, cep: &str, cep_version: Option<EnumCepRequestVersion>) -> crate::BrResult<CepResponseData> {
+impl BrasilApiClient {
+    pub async fn get_cep(&self, cep: &str, cep_version: Option<EnumCepRequestVersion>) -> Result<CepResponseData, Error> {
         lazy_static! {
             static ref RE: regex::Regex = regex::Regex::new(r"[^0-9]").unwrap();
         }
-        
         let cepver = cep_version.unwrap_or(EnumCepRequestVersion::V1);
         let url = match cepver {
-            EnumCepRequestVersion::V2 => URL_V2,
-            _ => URL_V1     
+            EnumCepRequestVersion::V2 => SVC_V2_URL,
+            _ => SVC_V1_URL     
         };
+        
         let temp_zipcode = RE.replace_all(cep, "");
         if temp_zipcode.is_empty() || temp_zipcode.len() > 8 {
-            Err(format!("INVALID INPUT: [{}] - cep should be provided and have max length 8", cep))?
+            return Err(Error::InvalidInputLenError
+                {
+                    name: "cep".to_string(),
+                    min: 8, 
+                    max: 8
+                })?
         }
-
-        return self.get_helper::<CepResponseData>(format!("{}/{}",url, &temp_zipcode));
+        
+        Ok(get::<(), CepResponseData>(
+            &format!("{}/{}/{}", self.base_url, url, temp_zipcode)
+        ).await?)
     }
 }
 
 
 #[cfg(test)]
 mod tests {
-    use crate::{cep::{CepResponseData, EnumCepRequestVersion}, client::tests::cli};
+    use super::*;
+    use crate::client::tests::*;
+    use futures_await_test::async_test;
 
-    use super::CepOperations;
-
-    #[test]
-    fn testc_invalid_input_minlen_none_ver() {
-        let resp = cli().get_cep("09777", None);
-
-        assert!(resp.is_err());
-    }
-
-    #[test]
-    fn test_invalid_input_empty_none_ver() {
-        let resp = cli().get_cep("", None);
+    #[async_test]
+    async fn testc_invalid_input_minlen_none_ver() {
+        let resp = cli().get_cep("09777", None)
+        .await;
 
         assert!(resp.is_err());
     }
 
-    #[test]
-    fn test_valid_none_ver() {
-        let resp = cli().get_cep("01402-000", None);
+    #[async_test]
+    async fn test_invalid_input_empty_none_ver() {
+        let resp = cli().get_cep("", None)
+        .await;
+
+        assert!(resp.is_err());
+    }
+
+    #[async_test]
+    async fn test_valid_none_ver() {
+        let resp = cli().get_cep("01402-000", None).await;
         assert!(resp.is_ok());
 
         let expected_text = r#"{"cep":"01402000","state":"SP","city":"São Paulo","neighborhood":"Jardim Paulista","street":"Avenida Brigadeiro Luís Antônio","service":"viacep"}"#;
@@ -146,10 +145,10 @@ mod tests {
         assert_eq!(from_svc, expected_json);
     }
 
-    #[test]
-    fn test_valid_v1_same_as_none() {
-        let resp_v1 = cli().get_cep("01402-000", Some(EnumCepRequestVersion::V1));
-        let resp_none = cli().get_cep("01402-000", None);
+    #[async_test]
+    async fn test_valid_v1_same_as_none() {
+        let resp_v1 = cli().get_cep("01402-000", Some(EnumCepRequestVersion::V1)).await;
+        let resp_none = cli().get_cep("01402-000", None).await;
         assert!(resp_v1.is_ok());
         assert!(resp_none.is_ok());
 
@@ -168,9 +167,9 @@ mod tests {
         assert_eq!(from_svc, from_svc_none);
     }
 
-    #[test]
-    fn test_valid_v2() {
-        let resp = cli().get_cep("01402-000", Some(EnumCepRequestVersion::V2));
+    #[async_test]
+    async fn test_valid_v2() {
+        let resp = cli().get_cep("01402-000", Some(EnumCepRequestVersion::V2)).await;
         assert!(resp.is_ok());
 
         let expected_text = r#"{"cep":"01402000","state":"SP","city":"São Paulo","neighborhood":"Jardim Paulista","street":"Avenida Brigadeiro Luís Antônio","service":"viacep","location":{"type":"Point","coordinates":{"longitude":"-46.6367822","latitude":"-23.5507017"}}}"#;
@@ -183,10 +182,10 @@ mod tests {
         assert_eq!(from_svc, expected_json);
     }
 
-    #[test]
-    fn test_valid_v2_not_equals_v1() {
-        let resp_v2 = cli().get_cep("01402-000", Some(EnumCepRequestVersion::V2));
-        let resp_none = cli().get_cep("01402-000", None);
+    #[async_test]
+    async fn test_valid_v2_not_equals_v1() {
+        let resp_v2 = cli().get_cep("01402-000", Some(EnumCepRequestVersion::V2)).await;
+        let resp_none = cli().get_cep("01402-000", None).await;
         assert!(resp_v2.is_ok());
         assert!(resp_none.is_ok());
 

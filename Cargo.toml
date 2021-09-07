@@ -1,17 +1,27 @@
 [package]
 name = "brasilapi-client"
 version = "0.1.0"
+authors = ["Renan Vizza Campos <renanvcampos@gmail.com>"]
+description = "Rust client implementation to consume BrasilAPI"
+repository = "https://github.com/rvcampos/brasilapi-client-rust"
+categories = ["api-bindings"]
 edition = "2018"
+keywords = ["brasil", "brasilapi","brasil-api"]
+license = "MIT"
 
 [features]
-default = ["sync"]
-async = []
-sync = ["reqwest/blocking"]
+default = []
+sync = []
 
 [dependencies]
-serde =  { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-reqwest = { version = "0.11.4", features = ["json"] } 
+serde =  { version = "1.0", features = ["derive"] }
+isahc = "1.5"
+log = "0.4"
 regex = "1"
-lazy_static = "1.4.0"
-thiserror = "^1.0.24"
+lazy_static = "1.4"
+
+[dev-dependencies]
+env_logger = "0.9"
+futures-await-test = "0.3"
+futures = "0.3"
