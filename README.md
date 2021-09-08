@@ -8,7 +8,7 @@ Rust client implementation for [Brasil API](https://brasilapi.com.br/docs)
 To use this client, add the following to your Cargo.toml:
 ```toml
 [dependencies]
-brasilapi-client = "0.1.1"
+brasilapi-client = "0.1"
 ```
 
 You may also choose a runtime

@@ -20,6 +20,12 @@ impl BrasilApiClient {
     }
 }
 
+impl Clone for BrasilApiClient {
+    fn clone(&self) -> Self {
+        Self { base_url: self.base_url.clone() }
+    }
+}
+
 #[cfg(test)]
 pub(crate) mod tests {
     use crate::client::BrasilApiClient;

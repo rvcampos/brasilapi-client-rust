@@ -1,5 +1,6 @@
 # BRASILAPI-CLIENT
-
+## 0.1.3
+Implementing cloneable
 ## 0.1.2
 Fixing Readme - docs
 ## 0.1.1
