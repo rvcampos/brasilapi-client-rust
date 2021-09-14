@@ -131,6 +131,14 @@ mod tests {
     }
 
     #[async_test]
+    async fn test_invalid_cep() {
+        let resp = cli().get_cep("12345678", None)
+        .await;
+
+        assert!(resp.is_err());
+    }
+
+    #[async_test]
     async fn test_valid_none_ver() {
         let resp = cli().get_cep("01402-000", None).await;
         assert!(resp.is_ok());
