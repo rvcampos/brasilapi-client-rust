@@ -57,7 +57,7 @@ TODO
 Implemented
 
 ### National Holidays - (Brasil) 
-Partial Implemented -> Dates are being treated as STRINGS
+Implemented
 
 ### FIPE
 TODO
