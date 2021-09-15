@@ -8,7 +8,7 @@ Data contract for Brasil holidays
  */
 pub struct HolidaysResponseData {
     /// The holiday date
-    pub date : String,
+    pub date : chrono::NaiveDate,
     /// The holiday name
     pub name: String,
     /// The holiday type
