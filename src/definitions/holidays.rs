@@ -1,6 +1,34 @@
 use crate::{client::*, constants::holidays::{SVC_URL,MIN_YEAR, MAX_YEAR}, errors::*, request::*};
 use serde::{Deserialize, Serialize};
 
+// Defining a custom serializer for only Dates
+mod serde_naivedate {
+    use serde::{self, Deserialize, Serializer, Deserializer};
+
+    const FORMAT: &'static str = "%Y-%m-%d";
+
+    pub fn serialize<S>(
+        date: &chrono::NaiveDate,
+        serializer: S,
+    ) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let s = format!("{}", date.format(FORMAT));
+        serializer.serialize_str(&s)
+    }
+
+    pub fn deserialize<'de, D>(
+        deserializer: D,
+    ) -> Result<chrono::NaiveDate, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s = String::deserialize(deserializer)?;
+        chrono::NaiveDate::parse_from_str(&s, FORMAT).map_err(serde::de::Error::custom)
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 /**
@@ -8,6 +36,7 @@ Data contract for Brasil holidays
  */
 pub struct HolidaysResponseData {
     /// The holiday date
+    #[serde(with = "serde_naivedate")]
     pub date : chrono::NaiveDate,
     /// The holiday name
     pub name: String,
