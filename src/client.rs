@@ -1,16 +1,14 @@
-use crate::{Rc};
-
 /// Default client for BrasilApi Operations
 #[derive(Debug)]
 pub struct BrasilApiClient {
     /// The BaseUrl
-    pub(crate) base_url: Rc<String>,
+    pub(crate) base_url: String,
 }
 
 impl BrasilApiClient {
     pub fn new(base_url: impl Into<String>) -> BrasilApiClient {
         BrasilApiClient {
-            base_url: Rc::new(base_url.into())
+            base_url: base_url.into()
         }
     }
 
