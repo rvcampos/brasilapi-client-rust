@@ -1,6 +1,6 @@
 [package]
 name = "brasilapi-client"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Renan Vizza Campos <renanvcampos@gmail.com>"]
 description = "Rust client implementation to consume BrasilAPI"
 repository = "https://github.com/rvcampos/brasilapi-client-rust"

@@ -1,4 +1,4 @@
-use crate::{client::*, constants::cep::{SVC_V1_URL, SVC_V2_URL}, errors::*, request::*};
+use crate::{client::*, constants::cep::{SVC_V1_URL, SVC_V2_URL}, errors::*, request::*, commons::EmptyOption};
 use serde::{Deserialize, Serialize};
 
 /**
@@ -33,18 +33,18 @@ impl PartialEq for Coordinates {
 pub struct Location
 {
     /// The GeoCoordinates
-    pub coordinates: Coordinates
+    pub coordinates: EmptyOption<Coordinates>
 }
 
 impl Default for Location {
     fn default() -> Self {
-        Location { coordinates: Coordinates { latitude: String::new(), longitude: String::new() } }
+        Location { coordinates: EmptyOption::Some(Coordinates { latitude: String::new(), longitude: String::new() }) }
     }
 }
 
 impl PartialEq for Location {
     fn eq(&self, other: &Self) -> bool {
-        self.coordinates == other.coordinates
+        self.coordinates.as_option() == other.coordinates.as_option()
     }
 }
 

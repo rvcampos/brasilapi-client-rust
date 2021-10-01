@@ -1,4 +1,6 @@
 # BRASILAPI-CLIENT
+## 0.2.1
+Handling empty object for Coordinates
 ## 0.2.0
 Removing RC as isahc already handles
 ## 0.1.3
