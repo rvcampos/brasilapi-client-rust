@@ -1,4 +1,6 @@
 # BRASILAPI-CLIENT
+## 0.2.2
+CEP test fixes + dependencies updates
 ## 0.2.1
 Handling empty object for Coordinates
 ## 0.2.0

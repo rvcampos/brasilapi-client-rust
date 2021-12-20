@@ -9,6 +9,12 @@ edition = "2018"
 keywords = ["brasil", "brasilapi","brasil-api"]
 license = "MIT"
 readme = "README.md"
+exclude = [
+    ".github/",
+    ".gitignore",
+    ".editorconfig"
+]
+
 
 [features]
 default = []
