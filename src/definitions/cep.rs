@@ -180,7 +180,8 @@ mod tests {
         let resp = cli().get_cep("01402-000", Some(EnumCepRequestVersion::V2)).await;
         assert!(resp.is_ok());
 
-        let expected_text = r#"{"cep":"01402000","state":"SP","city":"São Paulo","neighborhood":"Jardim Paulista","street":"Avenida Brigadeiro Luís Antônio","service":"viacep","location":{"type":"Point","coordinates":{"longitude":"-46.6367822","latitude":"-23.5507017"}}}"#;
+        let expected_text = r#"{"cep":"01402000","state":"SP","city":"São Paulo","neighborhood":"Jardim Paulista","street":"Avenida Brigadeiro Luís Antônio","service":"viacep","location":{"type":"Point","coordinates":{"longitude":"-46.6573802","latitude":"-23.57555"}}}"#;
+        //let expected_text = r#"{"cep":"01402000","state":"SP","city":"São Paulo","neighborhood":"Jardim Paulista","street":"Avenida Brigadeiro Luís Antônio","service":"viacep","location":{"type":"Point","coordinates":{"longitude":"-46.6367822","latitude":"-23.5507017"}}}"#;
         let mut expected_json = serde_json::from_str::<CepResponseData>(expected_text).unwrap();
         expected_json.service = "".into();
 
@@ -197,7 +198,7 @@ mod tests {
         assert!(resp_v2.is_ok());
         assert!(resp_none.is_ok());
 
-        let expected_text = r#"{"cep":"01402000","state":"SP","city":"São Paulo","neighborhood":"Jardim Paulista","street":"Avenida Brigadeiro Luís Antônio","service":"viacep","location":{"type":"Point","coordinates":{"longitude":"-46.6367822","latitude":"-23.5507017"}}}"#;
+        let expected_text = r#"{"cep":"01402000","state":"SP","city":"São Paulo","neighborhood":"Jardim Paulista","street":"Avenida Brigadeiro Luís Antônio","service":"viacep","location":{"type":"Point","coordinates":{"longitude":"-46.6573802","latitude":"-23.57555"}}}"#;
         let mut expected_json = serde_json::from_str::<CepResponseData>(expected_text).unwrap();
         expected_json.service = "".into();
 
