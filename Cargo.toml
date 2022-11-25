@@ -30,6 +30,6 @@ lazy_static = "1.4"
 chrono = "0.4"
 
 [dev-dependencies]
-env_logger = "0.9"
+env_logger = "0.10"
 futures-await-test = "0.3"
 futures = "0.3"
